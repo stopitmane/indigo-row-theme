@@ -1,0 +1,10 @@
+<header class="hdr">
+  <a class="logo" href="{{ routes.root_url }}">{{ shop.name }}</a>
+  <nav aria-label="Main">
+    {% for link in linklists[section.settings.menu].links %}<a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>{% endfor %}
+  </nav>
+  <a class="cartbtn" data-cart-open href="{{ routes.cart_url }}" aria-label="Cart">Cart <b data-cart-count>{{ cart.item_count }}</b></a>
+</header>
+{% schema %}
+{"name":"Header","settings":[{"type":"link_list","id":"menu","label":"Menu","default":"main-menu"}]}
+{% endschema %}

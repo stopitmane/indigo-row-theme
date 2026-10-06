@@ -1,0 +1,15 @@
+<section class="wrap">
+  <h1>{{ collection.title }}</h1>
+  {% if collection.description != blank %}<div class="rte">{{ collection.description }}</div>{% endif %}
+  {% paginate collection.products by 12 %}
+  <div class="row">
+    <p class="mute">{{ collection.products_count }} products</p>
+    <label>Sort <select data-sort>{% assign sort = collection.sort_by | default: collection.default_sort_by %}{% for o in collection.sort_options %}<option value="{{ o.value }}"{% if o.value == sort %} selected{% endif %}>{{ o.name }}</option>{% endfor %}</select></label>
+  </div>
+  <div class="grid">{% for product in collection.products %}{% render 'product-card', product: product %}{% else %}<p>No products found.</p>{% endfor %}</div>
+  {% if paginate.pages > 1 %}<nav class="pager" aria-label="Pagination">{% if paginate.previous %}<a href="{{ paginate.previous.url }}">Previous</a>{% endif %}<span>Page {{ paginate.current_page }} of {{ paginate.pages }}</span>{% if paginate.next %}<a href="{{ paginate.next.url }}">Next</a>{% endif %}</nav>{% endif %}
+  {% endpaginate %}
+</section>
+{% schema %}
+{"name":"Collection"}
+{% endschema %}

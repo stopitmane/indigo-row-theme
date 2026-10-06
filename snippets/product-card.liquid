@@ -1,0 +1,8 @@
+<a class="card" href="{{ product.url }}">
+  <div class="card-img">
+    {% if product.featured_media %}{{ product.featured_media | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(min-width:820px) 25vw, 50vw', alt: product.featured_media.alt }}{% else %}{{ 'product-1' | placeholder_svg_tag }}{% endif %}
+    {% unless product.available %}<span class="tag">Sold out</span>{% endunless %}
+  </div>
+  <h3>{{ product.title }}</h3>
+  <p class="price">{% if product.compare_at_price > product.price %}<s>{{ product.compare_at_price | money }}</s> {% endif %}{{ product.price | money }}</p>
+</a>

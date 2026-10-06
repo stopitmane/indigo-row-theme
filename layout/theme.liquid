@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{{ page_title }}{% unless page_title contains shop.name %} | {{ shop.name }}{% endunless %}</title>
+  {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+  <link rel="canonical" href="{{ canonical_url }}">
+  <style>
+    {{ settings.font_heading | font_face: font_display: 'swap' }}
+    {{ settings.font_body | font_face: font_display: 'swap' }}
+    :root{--font-heading:{{ settings.font_heading.family }},{{ settings.font_heading.fallback_families }};--font-body:{{ settings.font_body.family }},{{ settings.font_body.fallback_families }};--weight-heading:{{ settings.font_heading.weight }};--indigo:{{ settings.color_primary }};--accent:{{ settings.color_accent }};--bg:{{ settings.color_bg }};--card:{{ settings.color_card }};--ink:{{ settings.color_text }};--mute:{{ settings.color_text | color_mix: settings.color_bg, 70 }};--line:{{ settings.color_text | color_mix: settings.color_bg, 18 }}}
+  </style>
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+  <script>window.theme={cartUrl:{{ routes.cart_url | json }},addUrl:{{ routes.cart_add_url | json }}};</script>
+  {{ content_for_header }}
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  {% section 'header' %}
+  <main id="main">{{ content_for_layout }}</main>
+  {% section 'footer' %}
+  {% section 'cart-drawer' %}
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+</body>
+</html>

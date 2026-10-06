@@ -1,0 +1,32 @@
+<dialog id="cart-drawer" class="drawer" aria-label="Cart">
+  <div class="drawer-body" data-drawer-body>
+    <div class="drawer-head"><h2>Cart ({{ cart.item_count }})</h2><button type="button" data-drawer-close aria-label="Close cart">&times;</button></div>
+    {% if cart.item_count == 0 %}
+      <p>Your cart is empty.</p>
+      <a class="btn" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
+    {% else %}
+      <ul class="dlines">
+        {% for item in cart.items %}
+        <li>
+          <a href="{{ item.url }}">{% if item.image %}{{ item.image | image_url: width: 160 | image_tag: loading: 'lazy' }}{% endif %}</a>
+          <div>
+            <a href="{{ item.url }}"><strong>{{ item.product.title }}</strong></a>
+            {% unless item.product.has_only_default_variant %}<p class="mute small" style="margin:0">{{ item.variant.title }}</p>{% endunless %}
+            <div><span class="dqty"><button type="button" data-line="{{ forloop.index }}" data-qty="{{ item.quantity | minus: 1 }}" aria-label="Decrease quantity">&minus;</button><span>{{ item.quantity }}</span><button type="button" data-line="{{ forloop.index }}" data-qty="{{ item.quantity | plus: 1 }}" aria-label="Increase quantity">+</button></span><button type="button" class="link" data-line="{{ forloop.index }}" data-qty="0">Remove</button></div>
+          </div>
+          <span>{{ item.final_line_price | money }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      <form class="dfoot" action="{{ routes.cart_url }}" method="post">
+        <p>Subtotal <strong>{{ cart.total_price | money }}</strong></p>
+        <p class="mute small">Taxes and shipping are calculated at checkout.</p>
+        <button type="submit" name="checkout" class="btn">Check out</button>
+        <a class="btn ghost" href="{{ routes.cart_url }}">View cart</a>
+      </form>
+    {% endif %}
+  </div>
+</dialog>
+{% schema %}
+{"name":"Cart drawer"}
+{% endschema %}

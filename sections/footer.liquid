@@ -1,0 +1,9 @@
+<footer class="ftr">
+  <p class="logo">{{ shop.name }}</p>
+  {% if section.settings.text != blank %}<div class="rte">{{ section.settings.text }}</div>{% endif %}
+  <nav aria-label="Footer">{% for link in linklists[section.settings.menu].links %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}</nav>
+  <small>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</small>
+</footer>
+{% schema %}
+{"name":"Footer","settings":[{"type":"link_list","id":"menu","label":"Menu","default":"footer"},{"type":"richtext","id":"text","label":"Text","default":"<p>Hand-dyed in Abeokuta. Shipped from Lagos.</p>"}]}
+{% endschema %}

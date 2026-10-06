@@ -1,0 +1,39 @@
+<section class="wrap contact">
+  <div class="contact-form">
+    <h1>{{ page.title }}</h1>
+    <p class="lead">{{ section.settings.intro }}</p>
+    {% if section.settings.address != blank %}<p class="studio"><strong>Studio</strong><br>{{ section.settings.address | escape }}</p>{% endif %}
+    {%- form 'contact', class: 'cform' -%}
+      {% if form.posted_successfully? %}<p class="form-ok" role="status">Thanks. We will reply within two working days.</p>{% endif %}
+      {% if form.errors %}<div class="form-err" role="alert">{{ form.errors | default_errors }}</div>{% endif %}
+      <label>Name<input name="contact[name]" required autocomplete="name" value="{{ form.name }}"></label>
+      <label>Email<input type="email" name="contact[email]" required autocomplete="email" value="{{ form.email }}"></label>
+      <label>Message<textarea name="contact[body]" rows="6" required>{{ form.body }}</textarea></label>
+      <button type="submit" class="btn">Send message</button>
+    {%- endform -%}
+  </div>
+
+  <aside class="builder">
+    <h2>{{ section.settings.builder_heading }}</h2>
+    <p><strong>{{ section.settings.builder_name }}</strong><br><span class="mute">{{ section.settings.builder_role }}</span></p>
+    <p>{{ section.settings.builder_text }}</p>
+    <div class="builder-links">
+      {% if section.settings.portfolio_url != blank %}<a class="btn" href="{{ section.settings.portfolio_url }}" target="_blank" rel="noopener">View portfolio</a>{% endif %}
+      {% if section.settings.github_url != blank %}<a class="btn ghost" href="{{ section.settings.github_url }}" target="_blank" rel="noopener">GitHub</a>{% endif %}
+      {% if section.settings.email != blank %}<a class="btn ghost" href="mailto:{{ section.settings.email | escape }}">Email me</a>{% endif %}
+    </div>
+  </aside>
+</section>
+{% schema %}
+{"name":"Contact","settings":[
+ {"type":"textarea","id":"intro","label":"Intro","default":"Questions about an order, a custom piece or wholesale? Send a note and we will reply within two working days."},
+ {"type":"text","id":"builder_heading","label":"Builder heading","default":"About this build"},
+ {"type":"text","id":"builder_name","label":"Name","default":"Ajayi Taiwo John"},
+ {"type":"text","id":"builder_role","label":"Role","default":"Frontend developer, Lagos"},
+ {"type":"textarea","id":"builder_text","label":"Text","default":"Indigo Row is a portfolio project. I designed and built this Shopify theme in Liquid and vanilla JavaScript, with a variant picker, an AJAX cart drawer and merchant-editable sections."},
+ {"type":"text","id":"portfolio_url","label":"Portfolio URL","default":"https://ajayi-portfolio-five.vercel.app"},
+ {"type":"text","id":"github_url","label":"GitHub URL","default":"https://github.com/stopitmane"},
+ {"type":"text","id":"email","label":"Email address (adds an Email me button)","info":"Leave blank to hide the button."},
+ {"type":"text","id":"address","label":"Studio address","info":"Shown under the intro. Leave blank to hide."}
+]}
+{% endschema %}

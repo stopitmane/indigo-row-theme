@@ -1,0 +1,20 @@
+<section class="hero">
+  <div class="hero-copy">
+    <h1>{{ section.settings.heading }}</h1>
+    <p>{{ section.settings.text }}</p>
+    {% if section.settings.button_label != blank %}<a class="btn" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">{{ section.settings.button_label }}</a>{% endif %}
+  </div>
+  <div class="hero-img">
+    {% if section.settings.image != blank %}{{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'eager', sizes: '(min-width:820px) 50vw, 100vw', alt: section.settings.image.alt }}
+    {% else %}{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder' }}{% endif %}
+  </div>
+</section>
+{% schema %}
+{"name":"Hero","settings":[
+ {"type":"text","id":"heading","label":"Heading","default":"Cloth that remembers the hand"},
+ {"type":"textarea","id":"text","label":"Text","default":"Resist-dyed in indigo with cassava paste. Every piece is one of a kind."},
+ {"type":"text","id":"button_label","label":"Button label","default":"Shop the collection"},
+ {"type":"url","id":"button_link","label":"Button link"},
+ {"type":"image_picker","id":"image","label":"Image"}
+],"presets":[{"name":"Hero"}]}
+{% endschema %}
